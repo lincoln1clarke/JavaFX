@@ -1,4 +1,4 @@
-package application;//
+package application;
 
 import java.net.URL;
 import java.util.Optional;
@@ -18,6 +18,8 @@ import javafx.scene.input.KeyEvent;
 
 import java.text.DecimalFormat;
 
+//Importer tous les classes supportant le projet
+
 public class SampleController implements Initializable{
 
     @FXML
@@ -35,25 +37,27 @@ public class SampleController implements Initializable{
     @FXML
     private ComboBox<String> cboResult;
     
-    
-    static ObservableList<String> unitesVolumes = FXCollections.observableArrayList("Millilitres", "Centilitres", "Litres", "cm³", "dm³", "m³", "in³", "ft³");//Noms des unités pour le combobox
-    static double []volumeRelationships = {1, 10, 1000, 1, 1000, 1000000, 16.3871, 28316.8};//Relations entre les unités, en la même ordre que les noms des unités.
-    
     static ObservableList<String> unitQuantities = FXCollections.observableArrayList("de volume", "de masse", "d' énergie", "de temps");
     
-    static ObservableList<String> unitesMasse = FXCollections.observableArrayList("Gramme", "Kilogramme", "Milligramme", "Livre", "Once", "Tonne métrique", "Tonne impérial", "Tonne américain");//Noms des unités pour le combobox
+    
+    static ObservableList<String> volumeUnits = FXCollections.observableArrayList("Millilitres", "Centilitres", "Litres", "cm³", "dm³", "m³", "in³", "ft³");//Noms des unités pour le combobox
+    static double []volumeRelationships = {1, 10, 1000, 1, 1000, 1000000, 16.3871, 28316.8};//Relations entre les unités, en la même ordre que les noms des unités.
+        
+    static ObservableList<String> massUnits = FXCollections.observableArrayList("Gramme", "Kilogramme", "Milligramme", "Livre", "Once", "Tonne métrique", "Tonne impérial", "Tonne américain");//Noms des unités pour le combobox
     static double [] massRelationships = {1, 1000, 0.001, 453.592, 28.3495, 1000000, 1016050, 907185};//Relations entre les unités, en la même ordre que les noms des unités.
     
-    static ObservableList<String> unitesEnergie = FXCollections.observableArrayList("Joule", "Wh", "kWh", "Gramme Calorie", "Kilo Calorie", "Pied-Livre");//Noms des unités pour le combobox
+    static ObservableList<String> energyUnits = FXCollections.observableArrayList("Joule", "Wh", "kWh", "Gramme Calorie", "Kilo Calorie", "Pied-Livre");//Noms des unités pour le combobox
     static double [] energyRelationships = {1, 3600, 3600000, 28.3495, 1000000, 1016050, 907185};//Relations entre les unités, en la même ordre que les noms des unités.
     
-    static ObservableList<String> unitesTemps = FXCollections.observableArrayList("Secondes", "Minutes", "Heures", "Jours", "Semaines", "Mois (30 Jours)", "Ans");//Noms des unités pour le combobox
+    static ObservableList<String> timeUnits = FXCollections.observableArrayList("Secondes", "Minutes", "Heures", "Jours", "Semaines", "Mois (30 Jours)", "Ans");//Noms des unités pour le combobox
     static double [] timeRelationships = {1, 60, 3600, 86400, 604800, 2592000, 31536000};//Relations entre les unités, en la même ordre que les noms des unités.
     //L'ordre des unités est important.  Ayant le même ordre que les noms, les indexes sont identiques, permettant a la méthode de saisir l'indexe selectionné par le combobox, est d'utiliser cet index pour trouver les facteurs de proportionnalité entre les unités.
+   
     
-    static ObservableList<ObservableList<String>> unitesTout = FXCollections.observableArrayList(unitesVolumes, unitesMasse, unitesEnergie, unitesTemps);
+    static ObservableList<ObservableList<String>> unitesTout = FXCollections.observableArrayList(volumeUnits, massUnits, energyUnits, timeUnits);
     static ObservableList<double []> allRelationships = FXCollections.observableArrayList(volumeRelationships, massRelationships, energyRelationships, timeRelationships);
     //Crée des listes a partir des listes déjà crées.  Cela nous permet d'avoir plusieurs quantités (Volume, Masse...)
+    
     
     private static final DecimalFormat round = new DecimalFormat("0.0000");
     //Initialize un objet qui permet d'arrondir les nombres, utilisant la classe DecimalFormat
@@ -62,45 +66,45 @@ public class SampleController implements Initializable{
     
     @FXML
     void checkAndConvert(KeyEvent e) {
-    	TextField txt=(TextField)e.getSource();
-    	String sourceID = txt.getId();
+    	//Méthode exécuté lorsque quelque chose est tapé dans une des boites de texte.
+    	TextField txt=(TextField)e.getSource();//Crée un objet textfield pour cloner la source de l'event, ce qui sera utilisé par la méthode.
+    	String sourceID = txt.getId();//En tirer le ID de cet objet.
     	try{
+    		//Utiliser la source afin de savoir quelle boite est a modifer.
+    		//Convertir l'unité.
+    		//Ce processus est entouré du try catch car si le contenu d'une des boites n'est pas un nombre, le contenu ne peut pas être convertit en double.
+    		//En cas d'erreur, les lettres ou symboles doivent être enlevés, et puis cet étape recommence.
+    		//Une alerte est également montrée.
     		if(sourceID.equals("antecedent")) {
     			result.setText(round.format(convert(sourceID, Double.parseDouble(txt.getText()), cboAntecedent.getSelectionModel().getSelectedIndex(), cboResult.getSelectionModel().getSelectedIndex(), cboQuantities.getSelectionModel().getSelectedIndex())));
     		}else {
     			antecedent.setText(round.format(convert(sourceID, Double.parseDouble(txt.getText()), cboAntecedent.getSelectionModel().getSelectedIndex(), cboResult.getSelectionModel().getSelectedIndex(), cboQuantities.getSelectionModel().getSelectedIndex())));
     		}
     	}catch(Exception ex){
+    		//Si le contenu d'au moins une des boites ne s'agit pas de double
     		if(txt.getText().equals("")) {
     			result.setText("");
     			antecedent.setText("");
+    		//Si c'est car l'usager a supprimé la valeur et le string = "", on fixe les deux boites à 0.
     		}else {
-    			if(txt.getText().equals("-")) {
-    				String text = txt.getText();
-    				String num = "";
-    				for(int i = 0; i<text.length(); i++) {
-    					if(text.charAt(i) != '-') {
-    						num += text.charAt(i);
-    					}
+    			//Supprimer les charactères autre que les chiffres ou '.'
+    			String text = txt.getText();
+    			String num = "";
+    			for(int i = 0; i<text.length(); i++) {
+    				if(Character.isDigit(text.charAt(i)) || text.charAt(i) == '.') {
+    					num += text.charAt(i);
     				}
-    			}else {
-    				String text = txt.getText();
-    				String num = "";
-    				for(int i = 0; i<text.length(); i++) {
-    					if(Character.isDigit(text.charAt(i))) {
-    						num += text.charAt(i);
-    					}
-    				}
-    				
-    				txt.setText(num);
-    				Alert alert = new Alert(AlertType.ERROR);
-    				alert.setHeaderText("ERREUR");
-        			alert.setTitle("Attention");
-        			alert.setContentText("Entrée numérique seulement");
-        			alert.show();
-    				}
-    				checkAndConvert(e);
     			}
+    				
+    			txt.setText(num);
+    			//Montrer une alerte
+    			Alert alert = new Alert(AlertType.ERROR);
+    			alert.setHeaderText("ERREUR");
+        		alert.setTitle("Attention");
+        		alert.setContentText("Entrée numérique seulement");
+        		alert.show();
+    			}
+    			checkAndConvert(e);//Recommencer la conversion maintenant que les charactères posant problème a l'opération ont étés enlevés.
     		}
     	}
     
@@ -152,12 +156,13 @@ public class SampleController implements Initializable{
     	cboResult.setItems(unitesTout.get(cbo.getSelectionModel().getSelectedIndex()));
     	cboAntecedent.getSelectionModel().selectFirst();
     	cboResult.getSelectionModel().select(1);
-    	result.setText("");
+    	result.setText("");//Mettre la valeur des boites de texte à zero lorsque la quantité est changée.
     	antecedent.setText("");
     }
     
     @FXML
     void exitApp(ActionEvent event) {
+    	//Méthode qui saisit une confirmation de l'utilisateur lorsqu'il veut quitter l'application.
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setTitle("Quitter?");
     	alert.setHeaderText("Attention");
@@ -169,11 +174,11 @@ public class SampleController implements Initializable{
     }
     
 	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {//Méthode pour initializer les combobox.  Ça assigne les bons valeurs.
+	public void initialize(URL arg0, ResourceBundle arg1) {//Méthode pour initializer les combobox.  Assigne le contenu de chaque comboBox et règle celui qui est selectionné.
 		cboQuantities.setItems(unitQuantities);
 		cboQuantities.getSelectionModel().selectFirst();
-		cboAntecedent.setItems(unitesVolumes);
-		cboResult.setItems(unitesVolumes);
+		cboAntecedent.setItems(volumeUnits);
+		cboResult.setItems(volumeUnits);
 		cboAntecedent.getSelectionModel().selectFirst();
 		cboResult.getSelectionModel().select(1);
 	}

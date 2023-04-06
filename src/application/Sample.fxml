@@ -36,7 +36,7 @@
          </font>
       </TextField>
       <ComboBox fx:id="cboResult" layoutX="1209.0" layoutY="472.0" onAction="#changeUnit" prefHeight="61.0" prefWidth="454.0" />
-      <Button layoutX="836.0" layoutY="713.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="153.0" prefWidth="289.0" text="Quitter" textFill="RED">
+      <Button layoutX="836.0" layoutY="752.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="109.0" prefWidth="289.0" text="Quitter" textFill="RED">
          <font>
             <Font size="57.0" />
          </font>
