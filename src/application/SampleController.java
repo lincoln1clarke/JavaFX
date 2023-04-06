@@ -147,8 +147,8 @@ public class SampleController implements Initializable{
     
     @FXML
     void changeQuantity(ActionEvent e) {
-    	ComboBox<String> cbo = (ComboBox<String>)e.getSource();
-    	cboAntecedent.setItems(unitesTout.get(cbo.getSelectionModel().getSelectedIndex()));
+    	ComboBox<String> cbo = (ComboBox<String>)e.getSource();//Crée un objet comboBox représentant celui qui à été actionné.
+    	cboAntecedent.setItems(unitesTout.get(cbo.getSelectionModel().getSelectedIndex()));//Fixer la valeur+contenu des CBO antécédents et résultat dépendant de l'unité choisi
     	cboResult.setItems(unitesTout.get(cbo.getSelectionModel().getSelectedIndex()));
     	cboAntecedent.getSelectionModel().selectFirst();
     	cboResult.getSelectionModel().select(1);
