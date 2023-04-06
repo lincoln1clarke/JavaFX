@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
+   <children>
+      <ComboBox fx:id="cboAntecedent" layoutX="259.0" layoutY="472.0" onAction="#changeUnit" prefHeight="61.0" prefWidth="454.0" />
+      <TextField fx:id="antecedent" layoutX="258.0" layoutY="386.0" onKeyReleased="#checkAndConvert" prefHeight="75.0" prefWidth="457.0" promptText="0.000">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <Text layoutX="692.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Convertisseur de" wrappingWidth="591.6708984375">
+         <font>
+            <Font size="50.0" />
+         </font>
+      </Text>
+      <Text layoutX="366.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unité antécédent">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <Text layoutX="1331.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unité convertit">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <TextField fx:id="result" layoutX="1208.0" layoutY="386.0" onKeyReleased="#checkAndConvert" onKeyTyped="#checkAndConvert" prefHeight="75.0" prefWidth="457.0" promptText="0.000">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </TextField>
+      <ComboBox fx:id="cboResult" layoutX="1209.0" layoutY="472.0" onAction="#changeUnit" prefHeight="61.0" prefWidth="454.0" />
+      <Button layoutX="836.0" layoutY="713.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="153.0" prefWidth="289.0" text="Quitter" textFill="RED">
+         <font>
+            <Font size="57.0" />
+         </font>
+      </Button>
+      <ComboBox fx:id="cboQuantities" layoutX="1084.0" layoutY="56.0" onAction="#changeQuantity" prefHeight="77.0" prefWidth="344.0" />
+   </children>
+</AnchorPane>
