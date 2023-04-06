@@ -20,12 +20,7 @@
             <Font size="50.0" />
          </font>
       </Text>
-      <Text layoutX="366.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unité antécédent">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Text>
-      <Text layoutX="1331.0" layoutY="337.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unité convertit">
+      <Text layoutX="314.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taper pour convertir la valeur ci-dessous" textAlignment="CENTER" wrappingWidth="344.0">
          <font>
             <Font size="32.0" />
          </font>
@@ -36,11 +31,16 @@
          </font>
       </TextField>
       <ComboBox fx:id="cboResult" layoutX="1209.0" layoutY="472.0" onAction="#changeUnit" prefHeight="61.0" prefWidth="454.0" />
-      <Button layoutX="836.0" layoutY="752.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="109.0" prefWidth="289.0" text="Quitter" textFill="RED">
+      <Button layoutX="830.0" layoutY="779.0" mnemonicParsing="false" onAction="#exitApp" prefHeight="109.0" prefWidth="289.0" text="Quitter" textFill="RED">
          <font>
             <Font size="57.0" />
          </font>
       </Button>
       <ComboBox fx:id="cboQuantities" layoutX="1084.0" layoutY="56.0" onAction="#changeQuantity" prefHeight="77.0" prefWidth="344.0" />
+      <Text layoutX="1265.0" layoutY="312.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Taper pour convertir la valeur ci-dessous" textAlignment="CENTER" wrappingWidth="344.0">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
